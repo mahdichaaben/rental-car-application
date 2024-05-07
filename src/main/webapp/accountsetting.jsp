@@ -1,0 +1,186 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+
+<head>
+    <title>Rental Management Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+</head>
+
+<body>
+<header class="shadow-md relative flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm  dark:bg-neutral-800">
+  <nav class="max-w-[85rem] w-full mx-auto px-4 py-7 sm:flex sm:items-center sm:justify-between" aria-label="Global">
+    <div class="flex items-center justify-between">
+      <a class="flex-none text-xl font-semibold dark:text-white" href="<%= request.getContextPath() %>/home">Car rental app</a>
+      <div class="sm:hidden">
+        <button type="button" class="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-white dark:hover:bg-white/10" data-hs-collapse="#navbar-with-mega-menu" aria-controls="navbar-with-mega-menu" aria-label="Toggle navigation">
+          <svg class="hs-collapse-open:hidden flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+          <svg class="hs-collapse-open:block hidden flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="navbar-with-mega-menu" class="hs-collapse hidden  transition-all duration-300 basis-full grow sm:block">
+      <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
+        <a class="font-medium text-blue-500" href="<%= request.getContextPath() %>/home" aria-current="page">Home</a>
+        <a class="font-medium text-gray-600 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500" href="<%= request.getContextPath() %>/services">Services</a>
+        <a class="font-medium text-gray-600 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500" href="<%= request.getContextPath() %>/contact">Contact</a>
+        <div class="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none] ">
+          <% if (session.getAttribute("user") != null) { %>
+          <button id="profile-toggle" type="button" class="flex items-center w-full text-gray-600 hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 ">
+            Hello, ${user.name}
+            <svg class="ms-1 flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <% } else { %>
+           <a class="py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200" href="<%= request.getContextPath() %>/signup">Sign up</a>
+            <a class="py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="<%= request.getContextPath() %>/signin">Sign in</a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <div id="profile-dropdown" class="absolute hidden right-4 top-25 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="profile-toggle" tabindex="-1">
+        <div class="py-1" role="none">
+            <a href="<%= request.getContextPath() %>/listrentals" class="text-gray-700 block px-4 py-2 text-sm" id="menu-item-0">My Rentals</a>
+            <a href="<%= request.getContextPath() %>/listcars" class="text-gray-700 block px-4 py-2 text-sm" id="menu-item-1">Manage Car</a>
+            <a href="<%= request.getContextPath() %>/listrentals" class="text-gray-700 block px-4 py-2 text-sm" id="menu-item-2">Manage Rentals</a>
+            <a href="<%= request.getContextPath() %>/account-settings" class="text-gray-700 block px-4 py-2 text-sm" id="menu-item-3">Account Settings</a>
+            <a href="<%= request.getContextPath() %>/support" class="text-gray-700 block px-4 py-2 text-sm" id="menu-item-4">Support</a>
+            <form method="POST" action="logout" role="none">
+                <button type="submit" class="text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1" id="menu-item-5">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container mx-auto ">
+        <div class="bg-white max-w-sm mx-auto  rounded shadow-md">
+            <div class="card-body">
+                <c:if test="${not empty errorMessage}">
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        ${errorMessage}
+                    </div>
+                </c:if>
+                <div class="bg-grey-lighter min-h-screen flex flex-col">
+                    <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+                        <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+                            <h1 class="mb-8 text-3xl text-center">Setting Account</h1>
+                            <% if (request.getAttribute("errorMessage") != null) { %>
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <%= request.getAttribute("errorMessage") %>
+                            </div>
+                            <% } %>
+                            <form action="updateUserInfo" method="post" onsubmit="return validatePassword();">
+                                <label for="id" class="block mb-2">ID: ${user.id}</label>
+                                <input 
+                                    type="hidden"
+                                    id="id"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4"
+                                    name="id"
+                                    value="${user.id}" />
+
+                                <label for="name" class="block mb-2">Name</label>
+                                <input 
+                                    type="text"
+                                    id="name"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4"
+                                    name="name"
+                                    placeholder="Enter your name"
+                                    value="${user.name}" />
+
+                                <label for="email" class="block mb-2">Email</label>
+                                <input 
+                                    type="email"
+                                    id="email"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    value="${user.email}" />
+
+                                <label for="password" class="block mb-2">Password</label>
+                                <input 
+                                    type="password"
+                                    id="password"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4"
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    value="${user.password}" />
+
+                                <label for="confirm_password" class="block mb-2">Confirm Password</label>
+                                <input 
+                                    type="password"
+                                    id="confirm_password"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4"
+                                    name="confirm_password"
+                                    placeholder="Confirm your password" />
+
+                                <label for="phoneNumber" class="block mb-2">Phone Number</label>
+                                <input 
+                                    type="number"
+                                    id="phoneNumber"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4"
+                                    name="phoneNumber"
+                                    placeholder="Enter your phone number"
+                                    value="${user.phoneNumber}" />
+
+                                <label for="address" class="block mb-2">Address</label>
+                                <input 
+                                    type="text"
+                                    id="address"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4"
+                                    name="address"
+                                    placeholder="Enter your address"
+                                    value="${user.address}" />
+
+                                <button
+                                    type="submit"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                >Update Account</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // JavaScript function for password validation
+        function validatePassword() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+            var errorMessage = document.getElementById("error_message");
+
+            if (password !== confirmPassword) {
+                errorMessage.innerHTML = "Passwords do not match";
+                return false;
+            } else {
+                errorMessage.innerHTML = "";
+                return true;
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the profile toggle button
+            var profileToggle = document.getElementById("profile-toggle");
+
+            // Get the profile dropdown menu
+            var profileDropdown = document.getElementById("profile-dropdown");
+
+            // Add click event listener to the profile toggle button
+            profileToggle.addEventListener("click", function() {
+                if (profileDropdown.classList.contains("hidden")) {
+                    profileDropdown.classList.remove("hidden");
+                } else {
+                    profileDropdown.classList.add("hidden");
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
