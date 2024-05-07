@@ -26,38 +26,4 @@ The Simple Rental Car App is a user-friendly platform designed to facilitate car
 1. Admins can access the admin dashboard to manage cars, adding new listings and updating details as necessary.
 2. By maintaining the car inventory, admins ensure that users have access to accurate and up-to-date rental options.
 
-## Getting Started
 
-To get started with the Simple Rental Car App, follow these steps:
-
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your_username/rental-car-app.git
-    ```
-
-2. Navigate to the project directory:
-    ```bash
-    cd rental-car-app
-    ```
-
-3. Install dependencies:
-    ```bash
-    npm install
-    ```
-
-4. Start the development server:
-    ```bash
-    npm start
-    ```
-
-5. Access the app in your web browser at [http://localhost:3000](http://localhost:3000).
-
-## Contributors
-
-- Your Name
-
-## License
-
-This project is licensed under the MIT License.
-
-Feel free to customize the README further to include any additional information or branding specific to your rental car app!
