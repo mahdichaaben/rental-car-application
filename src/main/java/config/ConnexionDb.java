@@ -7,12 +7,12 @@ import java.util.TimeZone;
 
 public class ConnexionDb {
     // Configuration properties for MySQL
-    private static final String DB_CONNECTION = "mysql";
-    private static final String DB_HOST = "127.0.0.1";
+    private static final String DB_CONNECTION = "";
+    private static final String DB_HOST = "";
     private static final String DB_PORT = "3306";
     private static final String DB_DATABASE = "jeeproject";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "Mahdiadmin20_";
+    private static final String DB_PASSWORD = "";
     private static final String TIMEZONE = "Africa/Tunis"; // MySQL timezone format
 
     // Establishes a database connection
