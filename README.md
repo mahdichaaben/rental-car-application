@@ -8,10 +8,10 @@ The Simple Rental Car App is a user-friendly platform designed to facilitate car
 - **Homepage with Car Listings**: Users are greeted with a homepage displaying a list of available cars for rental.
 - **Add Rental**: Users can easily add rentals by selecting their desired car and filling out a simple form.
 - **Booking Management**: Users can manage their bookings, including viewing, modifying, or canceling existing reservations.
-- **User Profile**: Every user has access to manage their profile, allowing them to update personal information and preferences.
+- **User Profile**: Every user has access to manage their profile, allowing them to update personal information.
 
 ### For Admins:
-- **Car Management**: Admins have the capability to manage cars, including adding new listings, updating details, and marking cars as available or unavailable.
+- **Car Management**: Admins have the capability to manage cars, including adding new listings, updating details.
 
 ## How It Works
 
